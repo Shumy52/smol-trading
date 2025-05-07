@@ -1,9 +1,12 @@
 package Domain_Models;
 import Events.*;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+// Though process for this... This is a REBUILDER
+// I was thinking about making this the one that matches trades together
+// But that would break some principles... whatever
+// Point is, this is not the one that should do that.
 
 public class OrderBook {
     private final Map<String, Order> orders = new HashMap<>();
@@ -19,7 +22,9 @@ public class OrderBook {
         }
     }
 
-    public Collection<Order> getActiveOrders() {
-        return orders.values();
+    public List<Order> getActiveOrders() {return new ArrayList<Order>(orders.values());}
+
+    public Order findOrderById(String buyOrderId) {
+        return orders.get(buyOrderId);
     }
 }
