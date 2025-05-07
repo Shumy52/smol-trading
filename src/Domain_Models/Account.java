@@ -1,6 +1,6 @@
-import Events.Event;
-import Events.FundsCredited;
-import Events.FundsDebited;
+package Domain_Models;
+
+import Events.*;
 
 /**
  * This is the class concerned with the ca-ching
