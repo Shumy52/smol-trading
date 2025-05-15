@@ -1,17 +1,11 @@
 package Events;
 
-import java.time.LocalDateTime;
-
-public class OrderCancelled implements Event {
+public class OrderCancelled extends Event {
+    private static final long serialVersionUID = 1L;
     public final String orderId;
-    public final LocalDateTime timestamp;
 
     public OrderCancelled(String orderId) {
         this.orderId = orderId;
-        this.timestamp = LocalDateTime.now();
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
 }

@@ -1,19 +1,12 @@
 package Events;
 
-import java.time.LocalDateTime;
-
-public class FundsCredited implements Event {
+public class FundsCredited extends Event {
+    private static final long serialVersionUID = 1L;
     public final String userId;
     public final double amount;
-    public final LocalDateTime timestamp;
 
     public FundsCredited(String userId, double amount) {
         this.userId = userId;
         this.amount = amount;
-        this.timestamp = LocalDateTime.now();
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
     }
 }
