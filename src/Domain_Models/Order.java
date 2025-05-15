@@ -15,4 +15,8 @@ public class Order {
         this.quantity = quantity;
         this.price = price;
     }
+
+    public void setActive(boolean active){
+        this.active = active;
+    }
 }
