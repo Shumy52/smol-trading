@@ -6,7 +6,6 @@ import Events.*;
  * This is the class concerned with the ca-ching
  * It holds the current balance, or used to reconstruct in it the balance
  */
-package Domain_Models;
 
 import Events.Event;
 import Events.FundsCredited;
