@@ -6,7 +6,6 @@ public class Order {
     public final boolean isBuy;
     public final int quantity;
     public final double price;
-    public boolean active = true;
 
     public Order(String orderId, String userId, boolean isBuy, int quantity, double price) {
         this.orderId = orderId;
@@ -16,7 +15,5 @@ public class Order {
         this.price = price;
     }
 
-    public void setActive(boolean active){
-        this.active = active;
-    }
+   
 }

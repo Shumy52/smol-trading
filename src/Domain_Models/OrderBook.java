@@ -9,22 +9,45 @@ import java.util.*;
 // Point is, this is not the one that should do that.
 
 public class OrderBook {
-    private final Map<String, Order> orders = new HashMap<>();
+    private final Map<String, Order> activeOrders = new HashMap<>();
+    private final Map<String, Order> inactiveOrders = new HashMap<>();
+    // Alive NPCs and dead NPCs, remember?
 
     public void apply(Event e) {
         if (e instanceof OrderPlaced op) {
-            orders.put(op.orderId, new Order(op.orderId, op.userId, op.isBuy, op.quantity, op.price));
+            // New orders always go to active map, no point in adding dead orders
+            activeOrders.put(op.orderId, new Order(op.orderId, op.userId, op.isBuy, op.quantity, op.price));
         } else if (e instanceof OrderCancelled oc) {
-            orders.remove(oc.orderId);
+            // Move cancelled order from active to inactive
+            Order order = activeOrders.remove(oc.orderId);
+            if (order != null) {
+                inactiveOrders.put(oc.orderId, order);
+            }
         } else if (e instanceof TradeExecuted te) {
-            orders.remove(te.buyOrderId);
-            orders.remove(te.sellOrderId);
+            // Move both executed orders from active to inactive
+            Order buyOrder = activeOrders.remove(te.buyOrderId);
+            Order sellOrder = activeOrders.remove(te.sellOrderId);
+            
+            if (buyOrder != null) {
+                inactiveOrders.put(te.buyOrderId, buyOrder);
+            }
+            
+            if (sellOrder != null) {
+                inactiveOrders.put(te.sellOrderId, sellOrder);
+            }
         }
     }
 
-    public List<Order> getActiveOrders() {return new ArrayList<Order>(orders.values());}
+    public List<Order> getActiveOrders() {
+        return new ArrayList<>(activeOrders.values());
+    }
 
-    public Order findOrderById(String buyOrderId) {
-        return orders.get(buyOrderId);
+    public Order findOrderById(String orderId) {
+        // Check active orders first, then inactive if not found
+        Order order = activeOrders.get(orderId);
+        if (order == null) {
+            order = inactiveOrders.get(orderId);
+        }
+        return order;
     }
 }
