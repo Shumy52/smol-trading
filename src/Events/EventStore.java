@@ -11,9 +11,7 @@ import java.util.List;
  * The notebook responsible for keeping all the events in one place.
  * This is your bank statement, telling ya what you spent your crap on.
  */
-public class EventStore implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
+public class EventStore {
     private final List<Event> events = new ArrayList<>();
     private long nextSequence = 1;
     
